@@ -1,0 +1,1691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Real Talk: English for the Real World</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --teal: #2d6a4f;
+    --teal-light: #e8f4ef;
+    --gold: #b7884c;
+    --gold-light: #fdf3e3;
+    --purple: #6b4c9a;
+    --purple-light: #f0ebf8;
+    --red: #c0392b;
+    --green: #27ae60;
+    --ink: #1a1a1a;
+    --ink-soft: #4a4a4a;
+    --ink-muted: #8a8a8a;
+    --bg: #f9f7f4;
+    --white: #ffffff;
+    --rule: #e0ddd8;
+    --card: #ffffff;
+  }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* HEADER */
+  .course-header {
+    background: var(--teal);
+    color: white;
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .course-title {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  .course-subtitle {
+    font-size: 11px;
+    opacity: 0.75;
+    letter-spacing: 0.06em;
+    margin-top: 2px;
+  }
+
+  .progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .progress-bar {
+    width: 200px;
+    height: 6px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+
+  .progress-label {
+    font-size: 12px;
+    opacity: 0.85;
+    white-space: nowrap;
+  }
+
+  /* SECTION NAV */
+  .section-nav {
+    background: white;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    padding: 0 32px;
+    gap: 0;
+    overflow-x: auto;
+  }
+
+  .section-tab {
+    padding: 14px 20px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink-muted);
+    border-bottom: 3px solid transparent;
+    cursor: default;
+    white-space: nowrap;
+    letter-spacing: 0.03em;
+    transition: color 0.2s;
+    user-select: none;
+  }
+
+  .section-tab.active {
+    color: var(--teal);
+    border-bottom-color: var(--teal);
+  }
+
+  .section-tab.completed {
+    color: var(--green);
+  }
+
+  /* MAIN */
+  .main {
+    flex: 1;
+    max-width: 860px;
+    margin: 40px auto;
+    padding: 0 24px;
+    width: 100%;
+  }
+
+  /* SLIDE */
+  .slide { display: none; }
+  .slide.active { display: block; animation: fadeIn 0.3s ease; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .slide-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 10px;
+  }
+
+  .slide-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  .slide-body {
+    font-size: 15px;
+    color: var(--ink-soft);
+    line-height: 1.75;
+    margin-bottom: 28px;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+
+  .card-title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 16px;
+  }
+
+  /* TILES */
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .tile {
+    border: 2px solid var(--rule);
+    border-radius: 8px;
+    padding: 20px 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: white;
+  }
+
+  .tile:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+
+  .tile.teal { border-color: var(--teal); }
+  .tile.gold { border-color: var(--gold); }
+  .tile.purple { border-color: var(--purple); }
+
+  .tile-letter {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+
+  .tile.teal .tile-letter { color: var(--teal); }
+  .tile.gold .tile-letter { color: var(--gold); }
+  .tile.purple .tile-letter { color: var(--purple); }
+
+  .tile-name {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .tile-reveal {
+    font-size: 12px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    display: none;
+  }
+
+  .tile.revealed .tile-reveal { display: block; }
+  .tile.revealed { opacity: 1; }
+  .tile.teal.revealed { background: var(--teal-light); }
+  .tile.gold.revealed { background: var(--gold-light); }
+  .tile.purple.revealed { background: var(--purple-light); }
+
+  .tile-hint {
+    font-size: 12px;
+    color: var(--ink-muted);
+    text-align: center;
+    margin-bottom: 16px;
+    font-style: italic;
+  }
+
+  /* AUDIO ROWS */
+  .audio-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+  }
+
+  .audio-table th {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 2px solid var(--rule);
+  }
+
+  .audio-table th.textbook { color: var(--red); }
+  .audio-table th.real { color: var(--green); }
+
+  .audio-table td {
+    padding: 12px;
+    font-size: 14px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: middle;
+  }
+
+  .audio-table td:first-child { color: var(--ink-muted); font-style: italic; }
+  .audio-table td:nth-child(2) { color: var(--green); font-weight: 600; }
+
+  .audio-btn {
+    background: var(--teal-light);
+    border: 1px solid var(--teal);
+    border-radius: 4px;
+    padding: 5px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--teal);
+    cursor: pointer;
+    transition: background 0.15s;
+    white-space: nowrap;
+  }
+
+  .audio-btn:hover { background: var(--teal); color: white; }
+  .audio-btn.played { background: var(--teal); color: white; }
+
+  /* READ ROWS */
+  .read-rows { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+
+  .read-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 14px 16px;
+    border: 2px solid var(--rule);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: white;
+  }
+
+  .read-row:hover { border-color: var(--teal); }
+
+  .read-row.revealed {
+    background: var(--teal-light);
+    border-color: var(--teal);
+    cursor: default;
+  }
+
+  .read-letter {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--teal);
+    line-height: 1;
+    min-width: 32px;
+  }
+
+  .read-content { flex: 1; }
+
+  .read-word {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+
+  .read-desc {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    display: none;
+  }
+
+  .read-row.revealed .read-desc { display: block; }
+
+  /* KNOWLEDGE CHECK */
+  .kc-question { margin-bottom: 24px; }
+
+  .kc-prompt {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 6px;
+    line-height: 1.5;
+  }
+
+  .kc-audio {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--ink);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 14px;
+    transition: background 0.15s;
+  }
+
+  .kc-audio:hover { background: var(--teal); }
+
+  .kc-options { display: flex; flex-direction: column; gap: 8px; }
+
+  .kc-option {
+    padding: 12px 16px;
+    border: 2px solid var(--rule);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.15s;
+    background: white;
+    line-height: 1.5;
+  }
+
+  .kc-option:hover:not(.locked) { border-color: var(--teal); background: var(--teal-light); }
+  .kc-option.correct { border-color: var(--green); background: #eafaf1; color: var(--green); font-weight: 600; cursor: default; }
+  .kc-option.wrong { border-color: var(--red); background: #fdecea; color: var(--red); cursor: default; }
+  .kc-option.locked { cursor: default; opacity: 0.5; }
+
+  .kc-feedback {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    display: none;
+  }
+
+  .kc-feedback.show { display: block; }
+  .kc-feedback.ok { background: #eafaf1; color: var(--green); }
+  .kc-feedback.err { background: #fdecea; color: var(--red); }
+
+  /* IDIOM TABLE */
+  .idiom-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+    font-size: 14px;
+  }
+
+  .idiom-table th {
+    background: var(--teal);
+    color: white;
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .idiom-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  .idiom-table tr:nth-child(even) td { background: var(--bg); }
+
+  .idiom-table td:first-child { font-style: italic; font-weight: 600; color: var(--teal); }
+
+  .register-tag {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .register-tag.formal { background: #e8f4ef; color: var(--teal); }
+  .register-tag.casual { background: var(--gold-light); color: var(--gold); }
+
+  /* REGISTER COLUMNS */
+  .register-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .register-col {
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .register-col-header {
+    padding: 12px;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+  }
+
+  .register-col.formal .register-col-header { background: var(--teal); color: white; }
+  .register-col.casual .register-col-header { background: var(--gold); color: white; }
+  .register-col.informal .register-col-header { background: var(--purple); color: white; }
+
+  .register-col-body {
+    padding: 14px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  /* SCENARIO */
+  .scenario-bubble {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+    align-items: flex-start;
+  }
+
+  .scenario-name {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ink-muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .scenario-text {
+    background: white;
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 14px;
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .scenario-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: white;
+    flex-shrink: 0;
+    margin-top: 20px;
+  }
+
+  .avatar-l { background: var(--teal); }
+  .avatar-m { background: var(--gold); }
+  .avatar-s { background: var(--purple); }
+
+  .scenario-choices {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
+    margin-left: 48px;
+  }
+
+  .scenario-choice {
+    padding: 10px 14px;
+    border: 2px solid var(--rule);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.15s;
+    background: white;
+    line-height: 1.5;
+  }
+
+  .scenario-choice:hover:not(.locked) { border-color: var(--teal); background: var(--teal-light); }
+  .scenario-choice.correct { border-color: var(--green); background: #eafaf1; color: var(--green); font-weight: 600; }
+  .scenario-choice.wrong { border-color: var(--red); background: #fdecea; color: var(--red); }
+  .scenario-choice.locked { cursor: default; opacity: 0.55; }
+
+  .scenario-feedback {
+    margin-left: 48px;
+    margin-top: 8px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    display: none;
+  }
+  .scenario-feedback.show { display: block; }
+  .scenario-feedback.ok { background: #eafaf1; color: var(--green); }
+  .scenario-feedback.err { background: #fdecea; color: var(--red); }
+
+  /* PHONE TABLE */
+  .phone-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+    font-size: 14px;
+  }
+
+  .phone-table th {
+    background: var(--ink);
+    color: white;
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .phone-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--rule);
+    line-height: 1.5;
+  }
+
+  .phone-table tr:nth-child(even) td { background: var(--bg); }
+
+  .phone-table td:first-child { color: var(--ink-muted); font-size: 13px; }
+  .phone-table td:nth-child(2) { font-weight: 600; color: var(--teal); font-style: italic; }
+
+  /* MEETING TABLE */
+  .meeting-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+    font-size: 13px;
+  }
+
+  .meeting-table th {
+    background: var(--ink);
+    color: white;
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .meeting-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--rule);
+    line-height: 1.5;
+    vertical-align: top;
+  }
+
+  .meeting-table tr:nth-child(even) td { background: var(--bg); }
+  .meeting-table td:first-child { color: var(--ink-soft); }
+  .meeting-table td:nth-child(2) { font-weight: 600; color: var(--teal); font-style: italic; }
+
+  /* VOICEMAIL */
+  .voicemail-box {
+    background: var(--ink);
+    border-radius: 12px;
+    padding: 24px;
+    color: white;
+    margin-bottom: 20px;
+  }
+
+  .voicemail-label {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.6;
+    margin-bottom: 12px;
+  }
+
+  .voicemail-text {
+    font-size: 15px;
+    line-height: 1.7;
+    font-style: italic;
+    color: #e0ddd8;
+    margin-bottom: 16px;
+  }
+
+  .voicemail-text em {
+    color: var(--gold);
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  .voicemail-note {
+    font-size: 11px;
+    opacity: 0.5;
+    letter-spacing: 0.06em;
+  }
+
+  /* NAV BUTTONS */
+  .nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .btn {
+    padding: 12px 28px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.15s;
+    letter-spacing: 0.02em;
+  }
+
+  .btn-next {
+    background: var(--teal);
+    color: white;
+  }
+
+  .btn-next:hover:not(:disabled) { background: #245a41; transform: translateY(-1px); }
+  .btn-next:disabled { background: var(--rule); color: var(--ink-muted); cursor: not-allowed; transform: none; }
+
+  .btn-back {
+    background: transparent;
+    color: var(--ink-soft);
+    border: 1px solid var(--rule);
+  }
+
+  .btn-back:hover { border-color: var(--teal); color: var(--teal); }
+  .btn-back:disabled { opacity: 0; cursor: default; }
+
+  .slide-counter {
+    font-size: 12px;
+    color: var(--ink-muted);
+    font-weight: 600;
+  }
+
+  /* COMPLETION */
+  .completion {
+    text-align: center;
+    padding: 48px 32px;
+  }
+
+  .completion-badge {
+    width: 120px;
+    height: 120px;
+    background: var(--teal);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 56px;
+    margin: 0 auto 28px;
+    box-shadow: 0 8px 32px rgba(45,106,79,0.3);
+  }
+
+  .completion h2 {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  .completion-sub {
+    font-size: 16px;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    max-width: 520px;
+    margin: 0 auto 32px;
+  }
+
+  .completion-achievements {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    max-width: 520px;
+    margin: 0 auto 36px;
+    text-align: left;
+  }
+
+  .achievement {
+    background: var(--teal-light);
+    border: 1px solid #b5d5c8;
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 13px;
+    color: var(--teal);
+    font-weight: 600;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.4;
+  }
+
+  .achievement::before {
+    content: '✓';
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .btn-restart {
+    background: var(--teal);
+    color: white;
+    padding: 14px 32px;
+    border-radius: 6px;
+    border: none;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .btn-restart:hover { background: #245a41; }
+
+  .credit {
+    margin-top: 28px;
+    font-size: 12px;
+    color: var(--ink-muted);
+  }
+
+  @media (max-width: 600px) {
+    .tiles { grid-template-columns: 1fr; }
+    .register-grid { grid-template-columns: 1fr; }
+    .completion-achievements { grid-template-columns: 1fr; }
+    .progress-bar { width: 100px; }
+    .main { padding: 0 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="course-header">
+  <div>
+    <div class="course-title">REAL TALK: ENGLISH FOR THE REAL WORLD</div>
+    <div class="course-subtitle">Advanced ESL · 4 Sections · 20 Slides · Designed by Staycee Hicks</div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:5%"></div></div>
+    <div class="progress-label" id="progressLabel">Slide 1 of 20</div>
+  </div>
+</div>
+
+<div class="section-nav">
+  <div class="section-tab active" id="tab1">Section 1: Fast Speech</div>
+  <div class="section-tab" id="tab2">Section 2: Idioms & Slang</div>
+  <div class="section-tab" id="tab3">Section 3: Phone Calls</div>
+  <div class="section-tab" id="tab4">Section 4: Business Conversations</div>
+</div>
+
+<div class="main">
+
+<!-- ===================== SECTION 1 ===================== -->
+
+<!-- S1: Intro -->
+<div class="slide active" id="slide-1">
+  <div class="slide-eyebrow">Section 1 · Fast Speech & Reductions · Introduction</div>
+  <div class="slide-title">The Freeze Moment — Why It Happens</div>
+  <div class="slide-body">You studied. You practiced. You're ready.<br><br>Then a native speaker opens their mouth — and everything disappears.<br><br>This course solves that problem. You'll learn why natives sound the way they do, what to do when you freeze, and how to hold your own in real conversations — at work, on the phone, and in everyday life.</div>
+  <div class="card">
+    <div class="card-title">What You'll Learn</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:14px;color:var(--ink-soft);">
+      <div style="display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--teal);font-weight:700;">1.</span> Why natives sound the way they do</div>
+      <div style="display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--teal);font-weight:700;">2.</span> A strategy for the freeze moment</div>
+      <div style="display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--teal);font-weight:700;">3.</span> Idioms and slang at the right level</div>
+      <div style="display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--teal);font-weight:700;">4.</span> Phone and business conversation skills</div>
+    </div>
+  </div>
+  <div class="nav-buttons">
+    <button class="btn btn-back" onclick="goBack()" disabled>← Back</button>
+    <span class="slide-counter" id="counter-1">1 / 20</span>
+    <button class="btn btn-next" onclick="goNext()">Next →</button>
+  </div>
+</div>
+
+<!-- S2: Connect Drop Blend -->
+<div class="slide" id="slide-2">
+  <div class="slide-eyebrow">Section 1 · Fast Speech & Reductions · Concept</div>
+  <div class="slide-title">Connect, Drop, Blend — The Three Laws of Fast Speech</div>
+  <div class="slide-body">Native speakers aren't talking fast to confuse you. They're using patterns called <strong>reduced speech</strong>. Click each tile below to reveal how it works.</div>
+  <div class="tiles">
+    <div class="tile teal" id="tile-connect" onclick="revealTile('connect')">
+      <div class="tile-letter">C</div>
+      <div class="tile-name">CONNECT</div>
+      <div class="tile-reveal">Words blend at the edges:<br><em>"Did you"</em> → <strong>"Didja"</strong></div>
+    </div>
+    <div class="tile gold" id="tile-drop" onclick="revealTile('drop')">
+      <div class="tile-letter">D</div>
+      <div class="tile-name">DROP</div>
+      <div class="tile-reveal">Unstressed sounds disappear:<br><em>"going to"</em> → <strong>"gonna"</strong></div>
+    </div>
+    <div class="tile purple" id="tile-blend" onclick="revealTile('blend')">
+      <div class="tile-letter">B</div>
+      <div class="tile-name">BLEND</div>
+      <div class="tile-reveal">Sounds actually change shape:<br><em>"want to"</em> → <strong>"wanna"</strong></div>
+    </div>
+  </div>
+  <div class="tile-hint" id="tile-hint">👆 Click all three tiles to continue</div>
+  <div class="nav-buttons">
+    <button class="btn btn-back" onclick="goBack()">← Back</button>
+    <span class="slide-counter">2 / 20</span>
+    <button class="btn btn-next" id="next-2" onclick="goNext()" disabled>Next →</button>
+  </div>
+</div>
+
+<!-- S3: Audio Comparisons -->
+<div class="slide" id="slide-3">
+  <div class="slide-eyebrow">Section 1 · Fast Speech & Reductions · Examples</div>
+  <div class="slide-title">Hear the Difference: Real Audio Comparisons</div>
+  <div class="slide-body">Read both versions of each sentence aloud. Notice what changes from textbook to real speech. Click "Say it" to practice each real version.</div>
+  <div class="card">
+    <table class="audio-table">
+      <thead>
+        <tr>
+          <th class="textbook">❌ Textbook English</th>
+          <th class="real">✅ Real Speech</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>"I am going to call you later."</td>
+          <td>"Im gonna call ya later."</td>
+          <td><button class="audio-btn" id="abtn-1" onclick="markAudio('abtn-1',1)">Say it ▶</button></td>
+        </tr>
+        <tr>
+          <td>"Did you eat yet?"</td>
+          <td>"Didja eat yet?"</td>
+          <td><button class="audio-btn" id="abtn-2" onclick="markAudio('abtn-2',2)">Say it ▶</button></td>
+        </tr>
+        <tr>
+          <td>"I want to talk to you."</td>
+          <td>"I wanna talk to ya."</td>
+          <td><button class="audio-btn" id="abtn-3" onclick="markAudio('abtn-3',3)">Say it ▶</button></td>
+        </tr>
+        <tr>
+          <td>"Could you help me out?"</td>
+          <td>"Couldja help me out?"</td>
+          <td><button class="audio-btn" id="abtn-4" onclick="markAudio('abtn-4',4)">Say it ▶</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="tile-hint" id="audio-hint">👆 Practice at least one sentence to continue</div>
+  <div class="nav-buttons">
+    <button class="btn btn-back" onclick="goBack()">← Back</button>
+    <span class="slide-counter">3 / 20</span>
+    <button class="btn btn-next" id="next-3" onclick="goNext()" disabled>Next →</button>
+  </div>
+</div>
+
+<!-- S4: READ Method -->
+<div class="slide" id="slide-4">
+  <div class="slide-eyebrow">Section 1 · Fast Speech & Reductions · Strategy</div>
+  <div class="slide-title">The R.E.A.D. Method: Your Freeze Breaker</div>
+  <div class="slide-body">When you freeze, use R.E.A.D. Click each step to reveal what to do.</div>
+  <div class="read-rows">
+    <div class="read-row" id="read-R" onclick="revealRead('R')">
+      <div class="read-letter">R</div>
+      <div class="read-content">
+        <div class="read-word">RELAX</div>
+        <div class="read-desc">Take a breath. You don't need every word to understand the message.</div>
+      </div>
+    </div>
+    <div class="read-row" id="read-E" onclick="revealRead('E')">
+      <div class="read-letter">E</div>
+      <div class="read-content">
+        <div class="read-word">EXPECT reductions</div>
+        <div class="read-desc">You know they're coming now — reduced speech is normal, not careless.</div>
+      </div>
+    </div>
+    <div class="read-row" id="read-A" onclick="revealRead('A')">
+      <div class="read-letter">A</div>
+      <div class="read-content">
+        <div class="read-word">ANCHOR on key words</div>
+        <div class="read-desc">Focus on nouns and verbs. They carry the meaning even in fast speech.</div>
+      </div>
+    </div>
+    <div class="read-row" id="read-D" onclick="revealRead('D')">
+      <div class="read-letter">D</div>
+      <div class="read-content">
+        <div class="read-word">DON'T PANIC</div>
+        <div class="read-desc">"Could you say that again, please?" — This is professional, not weak.</div>
+      </div>
+    </div>
+  </div>
+  <div class="tile-hint" id="read-hint">👆 Click all four steps to continue</div>
+  <div class="nav-buttons">
+    <button class="btn btn-back" onclick="goBack()">← Back</button>
+    <span class="slide-counter">4 / 20</span>
+    <button class="btn btn-next" id="next-4" onclick="goNext()" disabled>Next →</button>
+  </div>
+</div>
+
+<!-- S5: Knowledge Check 1 -->
+<div class="slide" id="slide-5">
+  <div class="slide-eyebrow">Section 1 · Fast Speech & Reductions · Knowledge Check</div>
+  <div class="slide-title">Section 1 Check: What Did They Say?</div>
+  <div class="slide-body">Read each reduced speech phrase. Choose the correct meaning.</div>
+  <div class="card">
+    <div class="kc-question">
+      <div class="kc-prompt">▶ "Wouldja wanna grab lunch later?"</div>
+      <div class="kc-options" id="kc1">
+        <div class="kc-option" onclick="checkKC('kc1','kc1-fb',this,false)">Would you like to have lunch now?</div>
+        <div class="kc-option" onclick="checkKC('kc1','kc1-fb',this,true)">Would you want to grab lunch later?</div>
+        <div class="kc-option" onclick="checkKC('kc1','kc1-fb',this,false)">Did you want to go to lunch?</div>
+      </div>
+      <div class="kc-feedback" id="kc1-fb"></div>
+    </div>
+    <div class="kc-question">
+      <div class="kc-prompt">▶ "She's gonna need those reports end'a day."</div>
+      <div class="kc-options" id="kc2">
+        <div class="kc-option" onclick="checkKC('kc2','kc2-fb',this,false)">She needs those reports this week.</div>
+        <div class="kc-option" onclick="checkKC('kc2','kc2-fb',this,true)">She is going to need those reports by end of day.</div>
+        <div class="kc-option" onclick="checkKC('kc2','kc2-fb',this,false)">She already sent the reports today.</div>
+      </div>
+      <div class="kc-feedback" id="kc2-fb"></div>
+    </div>
+  </div>
+  <div class="nav-buttons">
+    <button class="btn btn-back" onclick="goBack()">← Back</button>
+    <span class="slide-counter">5 / 20</span>
+    <button class="btn btn-next" id="next-5" onclick="goNext()" disabled>Next →</button>
+  </div>
+</div>
+
+<!-- ===================== SECTION 2 ===================== -->
+
+<!-- S6: Idioms Intro -->
+<div class="slide" id="slide-6">
+  <div class="slide-eyebrow">Section 2 · Idioms & Adult Slang · Introduction</div>
+  <div class="slide-title">Why Idioms Feel Like a Secret Code</div>
+  <div class="slide-body">Your children use slang. But that's not how adults speak to each other.<br><br>Idioms and adult slang follow unspoken rules. Get them right and you sound natural. Get them wrong and the conversation gets awkward.<br><br>In this section, you'll learn the most common idioms adults use at work and in daily life — and exactly how and when to use them.</div>
+  <div class="nav-buttons">
+    <button class="btn btn-back" onclick="goBack()">← Back</button>
+    <span class="slide-counter">6 / 20</span>
+    <button class="btn btn-next" onclick="goNext()">Next →</button>
+  </div>
+</div>
+
+<!-- S7: Register -->
+<div class="slide" id="slide-7">
+  <div class="slide-eyebrow">Section 2 · Idioms & Adult Slang · Concept</div>
+  <div class="slide-title">What Is Register? Knowing When to Use What</div>
+  <div class="slide-body"><strong>Register</strong> = the level of formality in your language. Think of it like clothing — you don't wear the same thing to a job interview and a barbecue.</div>
+  <div class="register-grid">
+    <div class="register-col formal">
+      <div class="register-col-header">FORMAL</div>
+      <div class="register-col-body">
+        <div>Work emails</div>
+        <div>Meetings</div>
+        <div>Doctor's office</div>
+        <div>Job interviews</div>
+      </div>
+    </div>
+    <div class="register-col casual">
+      <div class="register-col-header">CASUAL</div>
+      <div class="register-col-body">
+        <div>Neighbors</div>
+        <div>Lunch break</div>
+        <div>Coworkers you know</div>
+        <div>Stores & errands</div>
+      </div>
+    </div>
+    <div class="register-col informal">
+      <div class="register-col-header">INFORMAL</div>
+      <div class="register-col-body">
+        <div>Close friends</div>
+        <div>Family</div>
+        <div>Text messages</div>
+        <div>Social media</div>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="background:var(--gold-light);border-color:var(--gold);">
+    <div style="font-size:14px;color:var(--ink-soft);line-height:1.6;"><strong style="color:var(--gold);">Rule:</strong> Adults adjust register based on who they're talking to. The same person can shift between all three in one day. You should too.</div>
+  </div>
+  <div class="nav-buttons">
+    <button class="btn btn-back" onclick="goBack()">← Back</button>
+    <span class="slide-counter">7 / 20</span>
+    <button class="btn btn-next" onclick="goNext()">Next →</button>
+  </div>
+</div>
+
+<!-- S8: Idiom Examples -->
+<div class="slide" id="slide-8">
+  <div class="slide-eyebrow">Section 2 · Idioms & Adult Slang · Examples</div>
+  <div class="slide-title">Common Adult Idioms in Context</div>
+  <div class="slide-body">Study these six idioms. Notice the register — some work at work, some with friends, some in both.</div>
+  <table class="idiom-table">
+    <thead>
+      <tr>
+        <th>Idiom</th>
+        <th>Meaning</th>
+        <th>Register</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>"My hands are tied."</td>
+        <td>I can't help — it's out of my control.</td>
+        <td><span class="register-tag formal">Formal/Casual</span></td>
+      </tr>
+      <tr>
+        <td>"Let's touch base."</td>
+        <td>Let's connect or follow up soon.</td>
+        <td><span class="register-tag formal">Formal/Work</span></td>
+      </tr>
+      <tr>
+        <td>"I'm swamped."</td>
+        <td>I'm very busy right now.</td>
+        <td><span class="register-tag casual">Casual/Work</span></td>
+      </tr>
+      <tr>
+        <td>"That's a stretch."</td>
+        <td>That's hard to believe or do.</td>
+        <td><span class="register-tag casual">Casual</span></td>
+      </tr>
+      <tr>
+        <td>"No worries."</td>
+        <td>It's okay / no problem at all.</td>
+        <td><span class="register-tag casual">Casual/Informal</span></td>
+      </tr>
+      <tr>
+        <td>"I'll circle back."</td>
+        <td>I'll follow up with you later.</td>
+        <td><span class="register-tag formal">Formal/Work</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="nav-buttons">
+    <button class="btn btn-back" onclick="goBack()">← Back</button>
+    <span class="slide-counter">8 / 20</span>
+    <button class="btn btn-next" onclick="goNext()">Next →</button>
+  </div>
+</div>
+
+<!-- S9: Office Scenario -->
+<div class="slide" id="slide-9">
+  <div class="slide-eyebrow">Section 2 · Idioms & Adult Slang · Scenario</div>
+  <div class="slide-title">Real Talk: Conversation at the Office</div>
+  <div class="slide-body">Read this conversation between Marcus and his manager Linda. At each turn marked YOU, choose the most natural, professional response.</div>
+
+  <div class="scenario-bubble">
+    <div>
+      <div class="scenario-name">Linda (Manager)</div>
+      <div class="scenario-text">"Marcus, I wanted to touch base about the Johnson account. I'm swamped this week — can we circle back on Thursday?"</div>
+    </div>
+    <div class="scenario-avatar avatar-l">L</div>
+  </div>
+
+  <div class="scenario-choices" id="sc9-1">
+    <div class="kc-prompt" style="margin-left:-48px;margin-bottom:8px;font-size:13px;color:var(--ink-muted);">YOU respond:</div>
+    <div class="scenario-choice" onclick="checkScenario('sc9-1','sc9-1-fb',this,true,'✓ Natural and professional — confirms you understood.')">Sure, no worries. Should I send you a summary first?</div>
+    <div class="scenario-choice" onclick="checkScenario('sc9-1','sc9-1-fb',this,false,'Try again — this sounds abrupt. Use a more natural opener.')">OK.</div>
+    <div class="scenario-choice" onclick="checkScenario('sc9-1','sc9-1-fb',this,false,'This is too formal. In a casual office conversation, it sounds stiff.')">I am agreeable to that arrangement.</div>
+  </div>
+  <div class="scenario-feedback" id="sc9-1-fb"></div>
+
+  <div class="scenario-bubble" style="margin-top:20px;">
+    <div class="scenario-avatar avatar-m">M</div>
+    <div>
+      <div class="scenario-name">Marcus (You)</div>
+      <div class="scenario-text">"Sure, no worries. Should I send you a summary first, or are your hands tied on that too?"</div>
+    </div>
+  </div>
+
+  <div class="scenario-bubble">
+    <div>
+      <div class="scenario-name">Linda (Manager)</div>
+      <div class="scenario-text">"Ha — a summary would be great. That's a stretch for my calendar but I'll make it work."</div>
+    </div>
+    <div class="scenario-avatar avatar-l">L</div>
+  </div>
+
+  <div class="card" style="background:var(--teal-light);border-color:var(--teal);margin-top:12px;">
+    <div style="font-size:13px;color:var(--teal);font-weight:600;">Idioms spotted: <em>touch base, swamped, circle back, no worries, hands are tied, that's a stretch</em> — six idioms in one natural conversation.</div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-back" onclick="goBack()">← Back</button>
+    <span class="slide-counter">9 / 20</span>
+    <button class="btn btn-next" id="next-9" onclick="goNext()" disabled>Next →</button>
+  </div>
+</div>
+
+<!-- S10: KC Section 2 -->
+<div class="slide" id="slide-10">
+  <div class="slide-eyebrow">Section 2 · Idioms & Adult Slang · Knowledge Check</div>
+  <div class="slide-title">Section 2 Check: Choose the Right Phrase</div>
+  <div class="slide-body">Choose the most appropriate phrase for each real-world situation.</div>
+  <div class="card">
+    <div class="kc-question">
+      <div class="kc-prompt">Situation 1: Your coworker asks how your weekend was. You say:</div>
+      <div class="kc-options" id="kc3">
+        <div class="kc-option" onclick="checkKC('kc3','kc3-fb',this,false)">"It was satisfactory."</div>
+        <div class="kc-option" onclick="checkKC('kc3','kc3-fb',this,true)">"It was pretty chill, honestly."</div>
+        <div class="kc-option" onclick="checkKC('kc3','kc3-fb',this,false)">"I do not wish to discuss it."</div>
+      </div>
+      <div class="kc-feedback" id="kc3-fb"></div>
+    </div>
+    <div class="kc-question">
+      <div class="kc-prompt">Situation 2: Your manager asks if you can take on more work. You're overloaded. You say:</div>
+      <div class="kc-options" id="kc4">
+        <div class="kc-option" onclick="checkKC('kc4','kc4-fb',this,false)">"I am very occupied at this time."</div>
+        <div class="kc-option" onclick="checkKC('kc4','kc4-fb',this,true)">"I'm pretty swamped right now — can we circle back on that?"</div>
+        <div class="kc-option" onclick="checkKC('kc4','kc4-fb',this,false)">"That is not possible for me."</div>
+      </div>
+      <div class="kc-feedback" id="kc4-fb"></div>
+    </div>
+  </div>
+  <div class="nav-buttons">
+    <button class="btn btn-back" onclick="goBack()">← Back</button>
+    <span class="slide-counter">10 / 20</span>
+    <button class="btn btn-next" id="next-10" onclick="goNext()" disabled>Next →</button>
+  </div>
+</div>
+
+<!-- ===================== SECTION 3 ===================== -->
+
+<!-- S11: Phone Intro -->
+<div class="slide" id="slide-11">
+  <div class="slide-eyebrow">Section 3 · Phone Conversations · Introduction</div>
+  <div class="slide-title">Why Phone Calls Feel Impossible</div>
+  <div class="slide-body"><strong>No body language. No facial expressions. No second chances to ask "what?"</strong><br><br>Phone calls are the hardest real-world English challenge for most advanced learners. You lose every visual cue you normally rely on — and natives don't slow down.<br><br>In this section, you'll learn the phrases, the strategies, and the confidence to handle any call.</div>
+  <div class="nav-buttons">
+    <button class="btn btn-back" onclick="goBack()">← Back</button>
+    <span class="slide-counter">11 / 20</span>
+    <button class="btn btn-next" onclick="goNext()">Next →</button>
+  </div>
+</div>
+
+<!-- S12: Phone Toolkit -->
+<div class="slide" id="slide-12">
+  <div class="slide-eyebrow">Section 3 · Phone Conversations · Vocabulary</div>
+  <div class="slide-title">Your Phone English Toolkit</div>
+  <div class="slide-body">These phrases work in almost every phone call situation. Practice saying each one aloud before you need it.</div>
+  <table class="phone-table">
+    <thead>
+      <tr>
+        <th>Situation</th>
+        <th>Natural Phrase</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Didn't understand</td>
+        <td>"I'm sorry, could you repeat that?"</td>
+      </tr>
+      <tr>
+        <td>Need them to slow down</td>
+        <td>"Could you slow down a little? I want to make sure I get this right."</td>
+      </tr>
+      <tr>
+        <td>Need to confirm</td>
+        <td>"So just to confirm — you said [X]?"</td>
+      </tr>
+      <tr>
+        <td>Putting someone on hold</td>
+        <td>"Can I put you on a brief hold? I'll be right back."</td>
+      </tr>
+      <tr>
+        <td>Taking a message</td>
+        <td>"Can I take a message, or would you prefer to call back?"</td>
+      </tr>
+      <tr>
+        <td>Ending the call</td>
+        <td>"Thanks so much. I'll take care of that right away."</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="nav-buttons">
+    <button class="btn btn-back" onclick="goBack()">← Back</button>
+    <span class="slide-counter">12 / 20</span>
+    <button class="btn btn-next" onclick="goNext()">Next →</button>
+  </div>
+</div>
+
+<!-- S13: Phone Scenario -->
+<div class="slide" id="slide-13">
+  <div class="slide-eyebrow">Section 3 · Phone Conversations · Scenario</div>
+  <div class="slide-title">Simulated Phone Call: School Office</div>
+  <div class="slide-body">You are calling your child's school to report an absence. Choose the best response at each turn.</div>
+
+  <div class="scenario-bubble">
+    <div>
+      <div class="scenario-name">School Secretary</div>
+      <div class="scenario-text">"Good morning, Jefferson Elementary, how can I help ya?"</div>
+    </div>
+    <div class="scenario-avatar avatar-s">S</div>
+  </div>
+
+  <div class="scenario-choices" id="sc13-1">
+    <div class="kc-prompt" style="margin-left:-48px;margin-bottom:8px;font-size:13px;color:var(--ink-muted);">YOU respond:</div>
+    <div class="scenario-choice" onclick="checkScenario('sc13-1','sc13-1-fb',this,true,'✓ Clear, professional, and gets straight to the point.')">Hi, I'm calling to report that my son Miguel won't be in today — he has a fever.</div>
+    <div class="scenario-choice" onclick="checkScenario('sc13-1','sc13-1-fb',this,false,'This doesn\'t give enough information. Always state the reason for the call first.')">I want to talk about my son.</div>
+    <div class="scenario-choice" onclick="checkScenario('sc13-1','sc13-1-fb',this,false,'Don\'t hang up — use your phone toolkit phrases to keep the call going.')">*hang up*</div>
+  </div>
+  <div class="scenario-feedback" id="sc13-1-fb"></div>
+
+  <div class="scenario-bubble" style="margin-top:20px;">
+    <div>
+      <div class="scenario-name">School Secretary</div>
+      <div class="scenario-text">"Gotcha — and what's the reason for the absence?"</div>
+    </div>
+    <div class="scenario-avatar avatar-s">S</div>
+  </div>
+
+  <div class="scenario-choices" id="sc13-2">
+    <div class="kc-prompt" style="margin-left:-48px;margin-bottom:8px;font-size:13px;color:var(--ink-muted);">YOU respond:</div>
+    <div class="scenario-choice" onclick="checkScenario('sc13-2','sc13-2-fb',this,true,'✓ Natural — gives the reason and asks a follow-up question like a confident caller.')">He has a fever — is there anything I need to submit, like a doctor's note?</div>
+    <div class="scenario-choice" onclick="checkScenario('sc13-2','sc13-2-fb',this,false,'Only giving the name doesn\'t answer her question about the reason.')">Miguel Garcia.</div>
+    <div class="scenario-choice" onclick="checkScenario('sc13-2','sc13-2-fb',this,false,'Asking her to repeat is fine when you truly didn\'t hear — but you did hear this question clearly.')">Could you repeat the question?</div>
+  </div>
+  <div class="scenario-feedback" id="sc13-2-fb"></div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-back" onclick="goBack()">← Back</button>
+    <span class="slide-counter">13 / 20</span>
+    <button class="btn btn-next" id="next-13" onclick="goNext()" disabled>Next →</button>
+  </div>
+</div>
+
+<!-- S14: Recovery Moves -->
+<div class="slide" id="slide-14">
+  <div class="slide-eyebrow">Section 3 · Phone Conversations · Strategy</div>
+  <div class="slide-title">When You Miss Something: Graceful Recovery</div>
+  <div class="slide-body">Missing something doesn't end the call. How you recover does. Use these three moves — in order if needed.</div>
+  <div class="read-rows">
+    <div class="read-row" id="read-clarify" onclick="revealRead2('clarify')">
+      <div class="read-letter" style="color:var(--teal);font-size:18px;font-weight:800;min-width:32px;">1</div>
+      <div class="read-content">
+        <div class="read-word">CLARIFY</div>
+        <div class="read-desc">"I'm sorry, could you say that last part again?"<br><em>Simple, polite, works every time.</em></div>
+      </div>
+    </div>
+    <div class="read-row" id="read-confirm" onclick="revealRead2('confirm')">
+      <div class="read-letter" style="color:var(--gold);font-size:18px;font-weight:800;min-width:32px;">2</div>
+      <div class="read-content">
+        <div class="read-word">CONFIRM</div>
+        <div class="read-desc">"So you're saying [repeat what you heard] — is that right?"<br><em>Shows you were listening and gives them a chance to correct you.</em></div>
+      </div>
+    </div>
+    <div class="read-row" id="read-bridge" onclick="revealRead2('bridge')">
+      <div class="read-letter" style="color:var(--purple);font-size:18px;font-weight:800;min-width:32px;">3</div>
+      <div class="read-content">
+        <div class="read-word">BRIDGE</div>
+        <div class="read-desc">"Let me make sure I have this correctly..." — buys you time to think without going silent.<br><em>Important: Asking for clarification is professionalism, not weakness.</em></div>
+      </div>
+    </div>
+  </div>
+  <div class="tile-hint" id="read2-hint">👆 Click all three recovery moves to continue</div>
+  <div class="nav-buttons">
+    <button class="btn btn-back" onclick="goBack()">← Back</button>
+    <span class="slide-counter">14 / 20</span>
+    <button class="btn btn-next" id="next-14" onclick="goNext()" disabled>Next →</button>
+  </div>
+</div>
+
+<!-- S15: KC Section 3 -->
+<div class="slide" id="slide-15">
+  <div class="slide-eyebrow">Section 3 · Phone Conversations · Knowledge Check</div>
+  <div class="slide-title">Section 3 Check: Handle the Call</div>
+  <div class="slide-body">Read this fast-speech voicemail carefully. Choose the correct answer.</div>
+  <div class="card" style="background:var(--ink);border-color:var(--ink);">
+    <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:10px;">▶ VOICEMAIL</div>
+    <div style="font-size:15px;color:#e0ddd8;font-style:italic;line-height:1.7;">"Hi, this is Dr. Patel's office calling to confirm your appointment. We've gotta reschedule — <span style="color:var(--gold);font-weight:600;">wouldja</span> be available <span style="color:var(--gold);font-weight:600;">Thursday'stead</span>?"</div>
+    <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:12px;">Reduced speech highlighted in gold</div>
+  </div>
+  <div class="card" style="margin-top:16px;">
+    <div class="kc-question">
+      <div class="kc-prompt">What did the caller ask?</div>
+      <div class="kc-options" id="kc5">
+        <div class="kc-option" onclick="checkKC('kc5','kc5-fb',this,false)">They want to confirm your current appointment time.</div>
+        <div class="kc-option" onclick="checkKC('kc5','kc5-fb',this,true)">They need to reschedule and are asking if Thursday works for you.</div>
+        <div class="kc-option" onclick="checkKC('kc5','kc5-fb',this,false)">They are canceling your appointment entirely.</div>
+      </div>
+      <div class="kc-feedback" id="kc5-fb"></div>
+    </div>
+  </div>
+  <div class="nav-buttons">
+    <button class="btn btn-back" onclick="goBack()">← Back</button>
+    <span class="slide-counter">15 / 20</span>
+    <button class="btn btn-next" id="next-15" onclick="goNext()" disabled>Next →</button>
+  </div>
+</div>
+
+<!-- ===================== SECTION 4 ===================== -->
+
+<!-- S16: Business Intro -->
+<div class="slide" id="slide-16">
+  <div class="slide-eyebrow">Section 4 · Business Conversations · Introduction</div>
+  <div class="slide-title">The Workplace Is Its Own Language</div>
+  <div class="slide-body"><strong>Even fluent speakers feel lost in business conversations.</strong><br><br>Meetings move fast. People interrupt. They use shorthand, acronyms, and idioms all at once.<br><br>This section gives you the language tools to <strong>participate confidently</strong> — not just listen politely.</div>
+  <div class="nav-buttons">
+    <button class="btn btn-back" onclick="goBack()">← Back</button>
+    <span class="slide-counter">16 / 20</span>
+    <button class="btn btn-next" onclick="goNext()">Next →</button>
+  </div>
+</div>
+
+<!-- S17: Meeting Vocabulary -->
+<div class="slide" id="slide-17">
+  <div class="slide-eyebrow">Section 4 · Business Conversations · Vocabulary</div>
+  <div class="slide-title">Meeting Room English: What People Actually Say</div>
+  <div class="slide-body">These phrases help you participate, not just observe. Practice saying each one aloud.</div>
+  <table class="meeting-table">
+    <thead>
+      <tr>
+        <th>What You Want to Say</th>
+        <th>How to Say It Naturally</th>
+        <th>Register</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>I want to add something</td>
+        <td>"If I could just jump in here..."</td>
+        <td><span class="register-tag formal">Formal/Work</span></td>
+      </tr>
+      <tr>
+        <td>I disagree politely</td>
+        <td>"That's a valid point — I'd also consider..."</td>
+        <td><span class="register-tag formal">Formal/Work</span></td>
+      </tr>
+      <tr>
+        <td>I didn't understand</td>
+        <td>"Could you clarify what you mean by [X]?"</td>
+        <td><span class="register-tag formal">Formal/Work</span></td>
+      </tr>
+      <tr>
+        <td>I need more time</td>
+        <td>"I want to make sure I've thought this through — can I follow up?"</td>
+        <td><span class="register-tag formal">Formal/Work</span></td>
+      </tr>
+      <tr>
+        <td>I agree strongly</td>
+        <td>"Absolutely — I think that's the right direction."</td>
+        <td><span class="register-tag casual">Casual/Work</span></td>
+      </tr>
+      <tr>
+        <td>I'm not sure</td>
+        <td>"That's a good question. Let me get back to you on that."</td>
+        <td><span class="register-tag formal">Formal/Work</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="nav-buttons">
+    <button class="btn btn-back" onclick="goBack()">← Back</button>
+    <span class="slide-counter">17 / 20</span>
+    <button class="btn btn-next" onclick="goNext()">Next →</button>
+  </div>
+</div>
+
+<!-- S18: Team Meeting Scenario -->
+<div class="slide" id="slide-18">
+  <div class="slide-eyebrow">Section 4 · Business Conversations · Scenario</div>
+  <div class="slide-title">Real Talk: The Team Meeting</div>
+  <div class="slide-body">You are in a team meeting. Choose the most natural, professional response at each turn.</div>
+
+  <div class="scenario-bubble">
+    <div>
+      <div class="scenario-name">Manager (Linda)</div>
+      <div class="scenario-text">"So we're gonna push the deadline to the 15th. Everybody good with that?"</div>
+    </div>
+    <div class="scenario-avatar avatar-l">L</div>
+  </div>
+
+  <div class="scenario-choices" id="sc18-1">
+    <div class="kc-prompt" style="margin-left:-48px;margin-bottom:8px;font-size:13px;color:var(--ink-muted);">YOU respond:</div>
+    <div class="scenario-choice" onclick="checkScenario('sc18-1','sc18-1-fb',this,true,'✓ Professional — you jump in politely and flag an issue clearly.')">If I could jump in — I want to flag a conflict on my end.</div>
+    <div class="scenario-choice" onclick="checkScenario('sc18-1','sc18-1-fb',this,false,'Too abrupt. In a meeting, even disagreement needs a polite opener.')">No.</div>
+    <div class="scenario-choice" onclick="checkScenario('sc18-1','sc18-1-fb',this,false,'Too formal and stiff for a team meeting environment.')">I am not in agreement.</div>
+  </div>
+  <div class="scenario-feedback" id="sc18-1-fb"></div>
+
+  <div class="scenario-bubble" style="margin-top:20px;">
+    <div class="scenario-avatar avatar-m">C</div>
+    <div>
+      <div class="scenario-name">Colleague</div>
+      <div class="scenario-text">"Marcus, you've been swamped — think you can still pull it off?"</div>
+    </div>
+  </div>
+
+  <div class="scenario-choices" id="sc18-2">
+    <div class="kc-prompt" style="margin-left:-48px;margin-bottom:8px;font-size:13px;color:var(--ink-muted);">YOU respond:</div>
+    <div class="scenario-choice" onclick="checkScenario('sc18-2','sc18-2-fb',this,false,'Vague. "I\'ll figure it out" doesn\'t inspire confidence in a professional setting.')">I'll figure it out.</div>
+    <div class="scenario-choice" onclick="checkScenario('sc18-2','sc18-2-fb',this,true,'✓ Honest, professional, and solution-focused — exactly right for a meeting.')">I'm pretty stretched, but if we prioritize X, absolutely.</div>
+    <div class="scenario-choice" onclick="checkScenario('sc18-2','sc18-2-fb',this,false,'Too vague. Meetings require more than uncertainty — offer a path forward.')">I do not know.</div>
+  </div>
+  <div class="scenario-feedback" id="sc18-2-fb"></div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-back" onclick="goBack()">← Back</button>
+    <span class="slide-counter">18 / 20</span>
+    <button class="btn btn-next" id="next-18" onclick="goNext()" disabled>Next →</button>
+  </div>
+</div>
+
+<!-- S19: Final Voicemail Challenge -->
+<div class="slide" id="slide-19">
+  <div class="slide-eyebrow">Section 4 · Business Conversations · Final Challenge</div>
+  <div class="slide-title">Your Real World Moment: All Skills Combined</div>
+  <div class="slide-body">Listen to this voicemail once. Then answer all three questions using everything you've learned.</div>
+
+  <div class="voicemail-box">
+    <div class="voicemail-label">▶ VOICEMAIL FROM SUPERVISOR</div>
+    <div class="voicemail-text">"Hey, it's Sandra. Listen, we're <em>gonna</em> need ya to cover Martinez's shift Thursday — <em>wouldja</em> be able to swing that? Also, heads up, the district rep's coming in so dress code's <em>gonna</em> be enforced. Lemme know ASAP. Thanks."</div>
+    <div class="voicemail-note">Reduced speech highlighted — use your R.E.A.D. strategy</div>
+  </div>
+
+  <div class="card">
+    <div class="kc-question">
+      <div class="kc-prompt">Q1: What is Sandra asking you to do?</div>
+      <div class="kc-options" id="kc6">
+        <div class="kc-option" onclick="checkKC('kc6','kc6-fb',this,false)">Call Martinez about his shift.</div>
+        <div class="kc-option" onclick="checkKC('kc6','kc6-fb',this,true)">Cover Martinez's shift on Thursday.</div>
+        <div class="kc-option" onclick="checkKC('kc6','kc6-fb',this,false)">Report to the district office on Thursday.</div>
+      </div>
+      <div class="kc-feedback" id="kc6-fb"></div>
+    </div>
+    <div class="kc-question">
+      <div class="kc-prompt">Q2: What additional information does she give?</div>
+      <div class="kc-options" id="kc7">
+        <div class="kc-option" onclick="checkKC('kc7','kc7-fb',this,false)">Martinez is out sick all week.</div>
+        <div class="kc-option" onclick="checkKC('kc7','kc7-fb',this,true)">A district representative is coming in and dress code will be enforced.</div>
+        <div class="kc-option" onclick="checkKC('kc7','kc7-fb',this,false)">The dress code policy has changed permanently.</div>
+      </div>
+      <div class="kc-feedback" id="kc7-fb"></div>
+    </div>
+    <div class="kc-question">
+      <div class="kc-prompt">Q3: What does she want you to do next?</div>
+      <div class="kc-options" id="kc8">
+        <div class="kc-option" onclick="checkKC('kc8','kc8-fb',this,false)">Show up Thursday without responding.</div>
+        <div class="kc-option" onclick="checkKC('kc8','kc8-fb',this,false)">Email the district representative.</div>
+        <div class="kc-option" onclick="checkKC('kc8','kc8-fb',this,true)">Let her know as soon as possible whether you can cover.</div>
+      </div>
+      <div class="kc-feedback" id="kc8-fb"></div>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-back" onclick="goBack()">← Back</button>
+    <span class="slide-counter">19 / 20</span>
+    <button class="btn btn-next" id="next-19" onclick="goNext()" disabled>Next →</button>
+  </div>
+</div>
+
+<!-- S20: Completion -->
+<div class="slide" id="slide-20">
+  <div class="completion">
+    <div class="completion-badge">🎓</div>
+    <h2>You Did It. Now Go Have the Conversation.</h2>
+    <p class="completion-sub">You've completed Real Talk: English for the Real World. You didn't just learn new words — you learned how language actually works when real people use it.</p>
+    <div class="completion-achievements">
+      <div class="achievement">You understand why natives sound the way they do</div>
+      <div class="achievement">You have the R.E.A.D. freeze-breaking strategy</div>
+      <div class="achievement">You can use idioms and adult slang at the right level</div>
+      <div class="achievement">You can handle phone calls with confidence</div>
+      <div class="achievement">You can participate in business meetings professionally</div>
+      <div class="achievement">You completed all 20 slides and 8 knowledge checks</div>
+    </div>
+    <button class="btn-restart" onclick="restartCourse()">↺ Restart Course</button>
+    <div class="credit">Designed by Staycee Hicks · Instructional Designer · Tampa, FL</div>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<script>
+  let currentSlide = 1;
+  const totalSlides = 20;
+
+  // Tile state
+  let tilesRevealed = { connect: false, drop: false, blend: false };
+  let audioPlayed = {};
+  let readRevealed = { R: false, E: false, A: false, D: false };
+  let read2Revealed = { clarify: false, confirm: false, bridge: false };
+  let kc1done = false, kc2done = false, kc3done = false, kc4done = false;
+  let kc5done = false, kc6done = false, kc7done = false, kc8done = false;
+  let sc9done = false, sc13done = false, sc18done = false;
+
+  function updateProgress() {
+    const pct = Math.round((currentSlide / totalSlides) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent = 'Slide ' + currentSlide + ' of ' + totalSlides;
+
+    // Section tabs
+    ['tab1','tab2','tab3','tab4'].forEach(t => document.getElementById(t).classList.remove('active','completed'));
+    if (currentSlide <= 5) document.getElementById('tab1').classList.add('active');
+    else if (currentSlide <= 10) document.getElementById('tab2').classList.add('active');
+    else if (currentSlide <= 15) document.getElementById('tab3').classList.add('active');
+    else { document.getElementById('tab4').classList.add('active'); }
+    if (currentSlide > 5) document.getElementById('tab1').classList.add('completed');
+    if (currentSlide > 10) document.getElementById('tab2').classList.add('completed');
+    if (currentSlide > 15) document.getElementById('tab3').classList.add('completed');
+  }
+
+  function goNext() {
+    if (currentSlide >= totalSlides) return;
+    document.getElementById('slide-' + currentSlide).classList.remove('active');
+    currentSlide++;
+    document.getElementById('slide-' + currentSlide).classList.add('active');
+    updateProgress();
+    window.scrollTo(0, 0);
+  }
+
+  function goBack() {
+    if (currentSlide <= 1) return;
+    document.getElementById('slide-' + currentSlide).classList.remove('active');
+    currentSlide--;
+    document.getElementById('slide-' + currentSlide).classList.add('active');
+    updateProgress();
+    window.scrollTo(0, 0);
+  }
+
+  function revealTile(name) {
+    if (tilesRevealed[name]) return;
+    tilesRevealed[name] = true;
+    document.getElementById('tile-' + name).classList.add('revealed');
+    if (tilesRevealed.connect && tilesRevealed.drop && tilesRevealed.blend) {
+      document.getElementById('tile-hint').textContent = '✓ All three revealed — you can continue.';
+      document.getElementById('tile-hint').style.color = 'var(--teal)';
+      document.getElementById('next-2').disabled = false;
+    }
+  }
+
+  function markAudio(id, num) {
+    document.getElementById(id).classList.add('played');
+    audioPlayed[num] = true;
+    document.getElementById('audio-hint').textContent = '✓ Keep practicing — you can continue now.';
+    document.getElementById('audio-hint').style.color = 'var(--teal)';
+    document.getElementById('next-3').disabled = false;
+  }
+
+  function revealRead(letter) {
+    if (readRevealed[letter]) return;
+    readRevealed[letter] = true;
+    document.getElementById('read-' + letter).classList.add('revealed');
+    if (readRevealed.R && readRevealed.E && readRevealed.A && readRevealed.D) {
+      document.getElementById('read-hint').textContent = '✓ R.E.A.D. complete — you can continue.';
+      document.getElementById('read-hint').style.color = 'var(--teal)';
+      document.getElementById('next-4').disabled = false;
+    }
+  }
+
+  function revealRead2(key) {
+    if (read2Revealed[key]) return;
+    read2Revealed[key] = true;
+    document.getElementById('read-' + key).classList.add('revealed');
+    if (read2Revealed.clarify && read2Revealed.confirm && read2Revealed.bridge) {
+      document.getElementById('read2-hint').textContent = '✓ All three recovery moves revealed — you can continue.';
+      document.getElementById('read2-hint').style.color = 'var(--teal)';
+      document.getElementById('next-14').disabled = false;
+    }
+  }
+
+  function checkKC(groupId, fbId, el, correct) {
+    const group = document.getElementById(groupId);
+    if (group.querySelector('.correct')) return;
+    const opts = group.querySelectorAll('.kc-option');
+    const fb = document.getElementById(fbId);
+
+    if (correct) {
+      opts.forEach(o => o.classList.add('locked'));
+      el.classList.add('correct');
+      fb.textContent = '✓ Correct! Great work anchoring on the key words.';
+      fb.className = 'kc-feedback show ok';
+
+      // Track which KC completed
+      if (groupId === 'kc1') kc1done = true;
+      if (groupId === 'kc2') kc2done = true;
+      if (groupId === 'kc3') kc3done = true;
+      if (groupId === 'kc4') kc4done = true;
+      if (groupId === 'kc5') kc5done = true;
+      if (groupId === 'kc6') kc6done = true;
+      if (groupId === 'kc7') kc7done = true;
+      if (groupId === 'kc8') kc8done = true;
+
+      // Unlock next if all KCs on slide done
+      if (kc1done && kc2done && document.getElementById('next-5')) document.getElementById('next-5').disabled = false;
+      if (kc3done && kc4done && document.getElementById('next-10')) document.getElementById('next-10').disabled = false;
+      if (kc5done && document.getElementById('next-15')) document.getElementById('next-15').disabled = false;
+      if (kc6done && kc7done && kc8done && document.getElementById('next-19')) document.getElementById('next-19').disabled = false;
+    } else {
+      el.classList.add('wrong');
+      fb.textContent = '✗ Not quite — anchor on the key words (nouns and verbs). Try again.';
+      fb.className = 'kc-feedback show err';
+      setTimeout(() => { el.classList.remove('wrong'); fb.className = 'kc-feedback'; }, 1500);
+    }
+  }
+
+  function checkScenario(groupId, fbId, el, correct, msg) {
+    const group = document.getElementById(groupId);
+    if (group.querySelector('.correct')) return;
+    const opts = group.querySelectorAll('.scenario-choice');
+    const fb = document.getElementById(fbId);
+
+    if (correct) {
+      opts.forEach(o => o.classList.add('locked'));
+      el.classList.add('correct');
+      fb.textContent = msg;
+      fb.className = 'scenario-feedback show ok';
+
+      if (groupId === 'sc9-1') sc9done = true;
+      if (groupId.startsWith('sc13')) {
+        if (groupId === 'sc13-1') window._sc13_1 = true;
+        if (groupId === 'sc13-2') window._sc13_2 = true;
+        if (window._sc13_1 && window._sc13_2) { sc13done = true; document.getElementById('next-13').disabled = false; }
+      }
+      if (groupId.startsWith('sc18')) {
+        if (groupId === 'sc18-1') window._sc18_1 = true;
+        if (groupId === 'sc18-2') window._sc18_2 = true;
+        if (window._sc18_1 && window._sc18_2) { sc18done = true; document.getElementById('next-18').disabled = false; }
+      }
+      if (sc9done && document.getElementById('next-9')) document.getElementById('next-9').disabled = false;
+    } else {
+      el.classList.add('wrong');
+      fb.textContent = msg;
+      fb.className = 'scenario-feedback show err';
+      setTimeout(() => { el.classList.remove('wrong'); fb.className = 'scenario-feedback'; }, 1800);
+    }
+  }
+
+  function restartCourse() {
+    document.getElementById('slide-' + currentSlide).classList.remove('active');
+    currentSlide = 1;
+    document.getElementById('slide-1').classList.add('active');
+    updateProgress();
+    window.scrollTo(0, 0);
+  }
+
+  updateProgress();
+</script>
+</body>
+</html>
