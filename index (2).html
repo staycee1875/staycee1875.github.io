@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Staycee Hicks | Instructional Designer</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a1a; --ink-soft: #4a4a4a; --ink-muted: #8a8a8a;
+    --paper: #f9f7f4; --white: #ffffff; --accent: #2d6a4f;
+    --accent-light: #e8f4ef; --accent-warm: #b7884c; --rule: #e0ddd8; --tag-bg: #f0ede8;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; background: var(--paper); color: var(--ink); font-size: 16px; line-height: 1.6; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(249,247,244,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--rule); display: flex; align-items: center; justify-content: space-between; padding: 0 48px; height: 60px; }
+  .nav-logo { font-family: 'DM Mono', monospace; font-size: 13px; letter-spacing: 0.08em; color: var(--accent); font-weight: 500; }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a { font-size: 13px; font-weight: 500; color: var(--ink-soft); text-decoration: none; letter-spacing: 0.04em; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+  .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding: 100px 48px 60px; gap: 80px; max-width: 1200px; margin: 0 auto; }
+  .hero-eyebrow { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: var(--accent); text-transform: uppercase; margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
+  .hero-eyebrow::before { content: ''; display: inline-block; width: 32px; height: 1px; background: var(--accent); }
+  h1 { font-family: 'DM Serif Display', serif; font-size: clamp(42px, 5vw, 64px); line-height: 1.05; color: var(--ink); margin-bottom: 28px; font-weight: 400; }
+  h1 em { font-style: italic; color: var(--accent); }
+  .hero-sub { font-size: 17px; color: var(--ink-soft); line-height: 1.7; margin-bottom: 40px; max-width: 480px; }
+  .hero-stats { display: flex; gap: 32px; margin-bottom: 40px; padding-top: 32px; border-top: 1px solid var(--rule); }
+  .stat-number { font-family: 'DM Serif Display', serif; font-size: 32px; color: var(--accent); line-height: 1; margin-bottom: 4px; }
+  .stat-label { font-size: 11px; color: var(--ink-muted); letter-spacing: 0.06em; text-transform: uppercase; font-weight: 500; }
+  .hero-cta { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-primary { background: var(--accent); color: white; padding: 14px 28px; border-radius: 4px; font-size: 14px; font-weight: 600; text-decoration: none; letter-spacing: 0.04em; transition: background 0.2s, transform 0.15s; display: inline-block; }
+  .btn-primary:hover { background: #245a41; transform: translateY(-1px); }
+  .btn-secondary { background: transparent; color: var(--ink); padding: 14px 28px; border-radius: 4px; font-size: 14px; font-weight: 500; text-decoration: none; border: 1px solid var(--rule); transition: border-color 0.2s, color 0.2s; display: inline-block; }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+  .hero-image-wrap { position: relative; display: flex; justify-content: center; align-items: center; }
+  .hero-image-frame { position: relative; width: 380px; height: 460px; }
+  .hero-image-bg { position: absolute; inset: 0; background: var(--accent-light); border-radius: 4px; transform: translate(12px, 12px); }
+  .hero-image-frame img { position: relative; width: 100%; height: 100%; object-fit: cover; border-radius: 4px; display: block; }
+  .hero-tag { position: absolute; bottom: -20px; right: -20px; background: var(--white); border: 1px solid var(--rule); border-radius: 4px; padding: 16px 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+  .hero-tag-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--ink-muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; }
+  .hero-tag-value { font-size: 13px; font-weight: 600; color: var(--accent); }
+  section { padding: 100px 48px; max-width: 1200px; margin: 0 auto; }
+  .section-rule { width: 100%; border: none; border-top: 1px solid var(--rule); max-width: 1200px; margin: 0 auto; }
+  .section-eyebrow { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: var(--accent); text-transform: uppercase; margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
+  .section-eyebrow::before { content: ''; display: inline-block; width: 24px; height: 1px; background: var(--accent); }
+  h2 { font-family: 'DM Serif Display', serif; font-size: clamp(30px, 3.5vw, 44px); font-weight: 400; line-height: 1.1; color: var(--ink); margin-bottom: 48px; }
+  h2 em { font-style: italic; color: var(--accent); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .about-body { font-size: 16px; color: var(--ink-soft); line-height: 1.8; }
+  .about-body p + p { margin-top: 20px; }
+  .about-body strong { color: var(--ink); font-weight: 600; }
+  .skills-group + .skills-group { margin-top: 36px; }
+  .skills-group-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 12px; }
+  .skills-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag { background: var(--tag-bg); color: var(--ink-soft); padding: 6px 14px; border-radius: 2px; font-size: 12px; font-weight: 500; }
+  .tag.accent { background: var(--accent-light); color: var(--accent); }
+  .portfolio-intro { font-size: 16px; color: var(--ink-soft); max-width: 600px; margin-bottom: 56px; line-height: 1.7; }
+  .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .project-card { background: var(--white); border: 1px solid var(--rule); border-radius: 4px; padding: 32px; transition: box-shadow 0.2s, transform 0.2s; display: flex; flex-direction: column; }
+  .project-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.08); transform: translateY(-2px); }
+  .project-card.featured { grid-column: span 2; background: var(--accent-light); border-color: transparent; }
+  .project-type { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 16px; }
+  .project-card.featured .project-type { color: var(--accent); }
+  .project-title { font-family: 'DM Serif Display', serif; font-size: 20px; font-weight: 400; color: var(--ink); margin-bottom: 12px; line-height: 1.2; }
+  .project-desc { font-size: 14px; color: var(--ink-soft); line-height: 1.7; flex: 1; margin-bottom: 24px; }
+  .project-result { background: var(--white); border-left: 3px solid var(--accent); padding: 10px 14px; font-size: 13px; color: var(--ink-soft); margin-bottom: 20px; border-radius: 0 2px 2px 0; }
+  .project-result strong { color: var(--accent); }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+  .project-link { font-size: 12px; font-weight: 600; color: var(--accent); text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; font-family: 'DM Mono', monospace; display: inline-flex; align-items: center; gap: 6px; margin-top: auto; transition: gap 0.15s; }
+  .project-link:hover { gap: 10px; }
+  .project-link::after { content: '→'; }
+  .timeline { position: relative; padding-left: 32px; }
+  .timeline::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 0; width: 1px; background: var(--rule); }
+  .timeline-item { position: relative; padding-bottom: 48px; }
+  .timeline-item::before { content: ''; position: absolute; left: -36px; top: 8px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); border: 2px solid var(--paper); box-shadow: 0 0 0 1px var(--accent); }
+  .timeline-period { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--ink-muted); letter-spacing: 0.08em; margin-bottom: 6px; }
+  .timeline-role { font-size: 17px; font-weight: 600; color: var(--ink); margin-bottom: 2px; }
+  .timeline-org { font-size: 14px; color: var(--accent); font-weight: 500; margin-bottom: 12px; }
+  .timeline-points { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .timeline-points li { font-size: 14px; color: var(--ink-soft); line-height: 1.6; padding-left: 16px; position: relative; }
+  .timeline-points li::before { content: '—'; position: absolute; left: 0; color: var(--ink-muted); font-size: 12px; }
+  .timeline-points li strong { color: var(--accent-warm); }
+  .contact-wrap { background: var(--ink); border-radius: 8px; padding: 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .contact-wrap h2 { color: var(--white); margin-bottom: 20px; }
+  .contact-wrap h2 em { color: var(--accent-light); }
+  .contact-sub { color: rgba(255,255,255,0.6); font-size: 16px; line-height: 1.7; }
+  .contact-links { display: flex; flex-direction: column; gap: 20px; }
+  .contact-item { display: flex; flex-direction: column; gap: 4px; }
+  .contact-item-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+  .contact-item-value { font-size: 15px; color: var(--white); font-weight: 500; text-decoration: none; transition: color 0.2s; }
+  .contact-item-value:hover { color: var(--accent-light); }
+  .contact-cta { margin-top: 32px; display: flex; gap: 16px; }
+  .btn-light { background: var(--white); color: var(--ink); padding: 14px 28px; border-radius: 4px; font-size: 14px; font-weight: 600; text-decoration: none; transition: background 0.2s; display: inline-block; }
+  .btn-light:hover { background: var(--accent-light); }
+  footer { text-align: center; padding: 40px 48px; border-top: 1px solid var(--rule); font-size: 12px; color: var(--ink-muted); font-family: 'DM Mono', monospace; letter-spacing: 0.06em; }
+  @media (max-width: 900px) {
+    nav { padding: 0 24px; } .nav-links { gap: 20px; }
+    .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; gap: 48px; }
+    .hero-image-frame { width: 280px; height: 340px; margin: 0 auto; }
+    section { padding: 72px 24px; }
+    .about-grid { grid-template-columns: 1fr; gap: 48px; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .project-card.featured { grid-column: span 1; }
+    .contact-wrap { grid-template-columns: 1fr; padding: 48px 32px; gap: 48px; }
+    .hero-stats { gap: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">S. HICKS · ID</span>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div style="max-width:1200px;margin:0 auto;">
+  <div class="hero">
+    <div class="hero-text">
+      <div class="hero-eyebrow">Instructional Designer · Tampa, FL</div>
+      <h1>Learning design that <em>moves the needle</em></h1>
+      <p class="hero-sub">I build training programs for regulated industries — healthcare, financial services, and workforce education — where performance gaps have real consequences.</p>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-number">85%</div>
+          <div class="stat-label">Ramp-up reduction</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">100+</div>
+          <div class="stat-label">Courses built</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">20K+</div>
+          <div class="stat-label">Learners reached</div>
+        </div>
+      </div>
+      <div class="hero-cta">
+        <a href="#portfolio" class="btn-primary">View My Work</a>
+        <a href="#contact" class="btn-secondary">Let's Talk</a>
+      </div>
+    </div>
+    <div class="hero-image-wrap">
+      <div class="hero-image-frame">
+        <div class="hero-image-bg"></div>
+        <img src="https://raw.githubusercontent.com/staycee1875/staycee1875.github.io/main/Headshot.jpg" alt="Staycee Hicks, Instructional Designer">
+        <div class="hero-tag">
+          <div class="hero-tag-label">Currently available</div>
+          <div class="hero-tag-value">Open to full-time roles</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="section-rule">
+
+<section id="about">
+  <div class="section-eyebrow">About</div>
+  <h2>I design for <em>real-world</em> performance</h2>
+  <div class="about-grid">
+    <div class="about-body">
+      <p>Most training tells people what to do. I build learning experiences that make them <strong>able</strong> to do it — under pressure, in regulated environments, with high stakes and diverse learner populations.</p>
+      <p>My background spans three industries where getting it wrong costs something: <strong>financial services</strong> (Fidelity, MetLife, Raymond James), <strong>healthcare</strong> (Moffitt Cancer Center), and <strong>adult workforce education</strong>. I've designed from scratch without templates, built compliance-ready programs, and reached learners across military, immigrant, and professional populations.</p>
+      <p>What makes my approach different: I'm multilingual, AI-fluent, and I understand the learner who didn't grow up in the system the training was built for. That lens makes the work better for every learner, not just the edge cases.</p>
+    </div>
+    <div class="about-skills">
+      <div class="skills-group">
+        <div class="skills-group-label">Instructional Design</div>
+        <div class="skills-tags">
+          <span class="tag accent">ADDIE</span>
+          <span class="tag accent">SAM</span>
+          <span class="tag">Needs Analysis</span>
+          <span class="tag">Curriculum Architecture</span>
+          <span class="tag">Job Aid Design</span>
+          <span class="tag">Storyboarding</span>
+        </div>
+      </div>
+      <div class="skills-group">
+        <div class="skills-group-label">Tools & Platforms</div>
+        <div class="skills-tags">
+          <span class="tag">Ellii LMS</span>
+          <span class="tag">TOPSpro Enterprise</span>
+          <span class="tag">PowerPoint</span>
+          <span class="tag">Google Slides</span>
+          <span class="tag">H5P</span>
+          <span class="tag">HTML/CSS</span>
+        </div>
+      </div>
+      <div class="skills-group">
+        <div class="skills-group-label">Industry Expertise</div>
+        <div class="skills-tags">
+          <span class="tag">Healthcare Compliance</span>
+          <span class="tag">Financial Services</span>
+          <span class="tag">Adult Education</span>
+          <span class="tag">Multilingual Learners</span>
+          <span class="tag">CASAS Assessment</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-rule">
+
+<section id="portfolio">
+  <div class="section-eyebrow">Portfolio</div>
+  <h2>Selected <em>work</em></h2>
+  <p class="portfolio-intro">Each project below started with a real performance gap, no pre-built template, and a learner population that needed something built specifically for them.</p>
+  <div class="projects-grid">
+
+    <div class="project-card featured">
+      <div class="project-type">Interactive eLearning · Advanced ESL</div>
+      <div class="project-title">Real Talk: English for the Real World</div>
+      <div class="project-desc">A fully interactive 20-slide eLearning module for advanced ESL learners navigating English in high-stakes workplace environments. Built without Articulate — custom HTML with click-to-reveal interactions, branching scenarios, knowledge checks, and a progress system across 4 sections: Fast Speech, Idioms & Slang, Phone Conversations, and Business English.</div>
+      <div class="project-result"><strong>Result:</strong> Demonstrates full eLearning authoring capability without enterprise tooling — portfolio-ready and deployable to any LMS or web platform.</div>
+      <div class="project-tags">
+        <span class="tag accent">HTML/CSS</span>
+        <span class="tag">Interactive Design</span>
+        <span class="tag">Branching Scenarios</span>
+        <span class="tag">Knowledge Checks</span>
+        <span class="tag">Workplace ESL</span>
+      </div>
+      <a href="https://staycee1875.github.io/RealTalk_Interactive_Module.html" target="_blank" class="project-link">Download & Open Module</a>
+    </div>
+
+    <div class="project-card">
+      <div class="project-type">Technical Documentation · Instructor Training</div>
+      <div class="project-title">Zoom Recording & Delivery Guide</div>
+      <div class="project-desc">End-to-end procedural training document covering software setup, recording workflow, file management, and student delivery — with troubleshooting tables and pre-session checklists. Corporate-ready documentation built for instructors with no prior recording experience.</div>
+      <div class="project-result"><strong>Result:</strong> Zero-disruption onboarding for new instructors; reproducible for any asynchronous delivery environment.</div>
+      <div class="project-tags">
+        <span class="tag">Technical Writing</span>
+        <span class="tag">Process Documentation</span>
+        <span class="tag">Instructor Training</span>
+      </div>
+      <a href="https://drive.google.com/file/d/1TvSVnfeioEsHNhEewgImOG2jyz66aR6V/preview" target="_blank" class="project-link">View Document</a>
+    </div>
+
+    <div class="project-card">
+      <div class="project-type">Lesson Series · C1–C2 ESL</div>
+      <div class="project-title">Job Interviews in Tampa</div>
+      <div class="project-desc">A complete lesson unit covering modal verbs, workplace vocabulary, power phrases, and idioms — designed for advanced ESL learners preparing for real job interviews in an American workplace context. Includes a 10-slide deck and a two-page PDF reference card.</div>
+      <div class="project-result"><strong>Result:</strong> Asynchronous-ready curriculum used with 45 learners across three instructional levels.</div>
+      <div class="project-tags">
+        <span class="tag">PowerPoint</span>
+        <span class="tag">Job Aids</span>
+        <span class="tag">C1–C2</span>
+        <span class="tag">Workplace English</span>
+      </div>
+      <a href="https://drive.google.com/file/d/1YwjMNjawuMA0QUA9Hp1rk1raCyhp1eIX/preview" target="_blank" class="project-link">View Lesson</a>
+    </div>
+
+    <div class="project-card">
+      <div class="project-type">Lesson Series · C1–C2 ESL</div>
+      <div class="project-title">At the Doctor's Office</div>
+      <div class="project-desc">A lesson unit on medical English covering symptom vocabulary, conditional grammar structures, and essential phrases for check-in, doctor consultations, and pharmacy visits — with idiom response scripts and Tampa-specific practice scenarios.</div>
+      <div class="project-result"><strong>Result:</strong> Part of a four-lesson recorded series delivered asynchronously via Zoom and WhatsApp.</div>
+      <div class="project-tags">
+        <span class="tag">PowerPoint</span>
+        <span class="tag">Healthcare English</span>
+        <span class="tag">C1–C2</span>
+      </div>
+      <a href="https://drive.google.com/file/d/1HGPM7KbKfwrzkahwWQDyk9Sh8Qs28NId/preview" target="_blank" class="project-link">View Lesson</a>
+    </div>
+
+    <div class="project-card">
+      <div class="project-type">Tiered Curriculum · Multilevel Design</div>
+      <div class="project-title">Multilevel Vocabulary System</div>
+      <div class="project-desc">Scaffolded vocabulary reference built across A1–C2 proficiency levels for a single topic — Food Shopping. Each level has differentiated vocabulary, example sentences, and cultural context. Designed for a single instructor running multilevel groups simultaneously.</div>
+      <div class="project-result"><strong>Result:</strong> Reusable tiered design framework applied across 10+ topic units.</div>
+      <div class="project-tags">
+        <span class="tag">Curriculum Architecture</span>
+        <span class="tag">Differentiated Instruction</span>
+        <span class="tag">A1–C2</span>
+      </div>
+      <a href="https://drive.google.com/file/d/1NiImdzS3bprYJFtA-DaNMhXlVFzDVa4Q/preview" target="_blank" class="project-link">View Sample</a>
+    </div>
+
+    <div class="project-card">
+      <div class="project-type">Lesson Series · C1–C2 ESL</div>
+      <div class="project-title">Renting an Apartment in Tampa</div>
+      <div class="project-desc">A lesson unit covering lease vocabulary, formal request grammar structures, and ten essential phrases for the full rental process — hunting, applying, signing, and moving out — with Tampa-specific practice scenarios and idiom scripts.</div>
+      <div class="project-result"><strong>Result:</strong> Lesson 3 of a 4-part series; designed for asynchronous delivery and self-study reference.</div>
+      <div class="project-tags">
+        <span class="tag">PowerPoint</span>
+        <span class="tag">Life Skills English</span>
+        <span class="tag">C1–C2</span>
+      </div>
+      <a href="https://drive.google.com/file/d/1rSz39PcEbtGNb_xswOKF7YaMNOTFCOKA/preview" target="_blank" class="project-link">View Lesson</a>
+    </div>
+
+  </div>
+</section>
+
+<hr class="section-rule">
+
+<section id="experience">
+  <div class="section-eyebrow">Experience</div>
+  <h2>Where the work <em>came from</em></h2>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-period">2025 – Present</div>
+      <div class="timeline-role">ESL Instructor & Workforce Learning Coordinator</div>
+      <div class="timeline-org">Hillsborough County Public Schools / Moffitt Cancer Center</div>
+      <ul class="timeline-points">
+        <li>Manage end-to-end learning operations across two adult education sites — LMS administration, compliance reporting, and testing infrastructure for <strong>45 learners</strong> across three instructional levels</li>
+        <li>Administer Ellii LMS and TOPSpro Enterprise; generate weekly performance and compliance reports for district leadership</li>
+        <li>Design and deliver all curriculum from scratch — no provided lesson plans — for C1–C2 adult ESL and EVS workplace English programs</li>
+      </ul>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-period">2020 – 2022</div>
+      <div class="timeline-role">Sales Enablement & Client Education Specialist</div>
+      <div class="timeline-org">MetLife</div>
+      <ul class="timeline-points">
+        <li>Delivered targeted training that improved financial literacy and increased client retention by <strong>15%</strong></li>
+        <li>Streamlined onboarding by integrating LMS and CRM platforms, enabling scalable delivery</li>
+      </ul>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-period">2006 – 2012</div>
+      <div class="timeline-role">L&D Trainer & Financial Specialist</div>
+      <div class="timeline-org">Fidelity Investments</div>
+      <ul class="timeline-points">
+        <li>Delivered structured onboarding and performance training for cohorts of <strong>40+ financial professionals</strong></li>
+        <li>Developed measurable learning objectives; continuously improved programs through feedback analysis and cross-functional collaboration</li>
+      </ul>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-period">2002 – 2005</div>
+      <div class="timeline-role">eLearning Specialist</div>
+      <div class="timeline-org">University of Maryland Global Campus · Tokyo, Japan</div>
+      <ul class="timeline-points">
+        <li>Designed and developed <strong>100+ asynchronous courses</strong> for military learners across global deployments</li>
+        <li>Authored technical onboarding manual that reduced learner ramp-up time by <strong>85%</strong></li>
+        <li>Maintained <strong>99% learner access success rate</strong> across global LMS deployments</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr class="section-rule">
+
+<section id="contact" style="padding-bottom:100px;">
+  <div class="contact-wrap">
+    <div>
+      <div class="section-eyebrow" style="color:rgba(255,255,255,0.5);">Let's Work Together</div>
+      <h2>Available for <em>full-time</em> roles in Tampa & remote</h2>
+      <p class="contact-sub">I'm actively seeking Instructional Designer and Learning Content Developer positions. If you're building a workforce training program in healthcare, financial services, or adult education — let's talk.</p>
+      <div class="contact-cta">
+        <a href="mailto:staycee.hicks18@gmail.com" class="btn-light">Send an Email</a>
+        <a href="https://www.linkedin.com/in/staycee" target="_blank" class="btn-secondary" style="border-color:rgba(255,255,255,0.2);color:white;">LinkedIn Profile</a>
+      </div>
+    </div>
+    <div class="contact-links">
+      <div class="contact-item">
+        <span class="contact-item-label">Email</span>
+        <a href="mailto:staycee.hicks18@gmail.com" class="contact-item-value">staycee.hicks18@gmail.com</a>
+      </div>
+      <div class="contact-item">
+        <span class="contact-item-label">LinkedIn</span>
+        <a href="https://www.linkedin.com/in/staycee" target="_blank" class="contact-item-value">linkedin.com/in/staycee</a>
+      </div>
+      <div class="contact-item">
+        <span class="contact-item-label">Location</span>
+        <span class="contact-item-value">Tampa, FL · Open to Remote</span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-item-label">Specialties</span>
+        <span class="contact-item-value">Healthcare · Financial Services · Multilingual Workforce</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 Staycee Hicks · Instructional Designer · Tampa, FL</footer>
+
+</body>
+</html>
